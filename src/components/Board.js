@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import Square from './Square';
 
-function Board() {
-	const [xIsNext, setXIsNext] = useState(true);
-	const [squares, setSquares] = useState(Array(9).fill(null));
-
+function Board({ xIsNext, squares, onPlay }) {
 	/**
 	 * Changed the box values by clicking
 	 * @param {*} i
 	 * @returns
 	 */
 	function handleClick(i) {
-		if (squares[i] || calculateWinner(squares)) {
+		if (calculateWinner(squares) || squares[i]) {
 			return;
 		}
 
@@ -22,8 +19,7 @@ function Board() {
 		} else {
 			nextSquares[i] = 'O';
 		}
-		setSquares(nextSquares);
-		setXIsNext(!xIsNext);
+		onPlay(nextSquares);
 	}
 
 	/**
